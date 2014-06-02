@@ -16,6 +16,7 @@
 #include "string-list.h"
 #include "sha1-array.h"
 
+#ifndef NO_RSYNC
 /* rsync support */
 
 /*
@@ -143,6 +144,8 @@ static void insert_packed_refs(const char *packed_refs, struct ref **list)
 	}
 }
 
+#endif /* NO_RSYNC */
+
 static void set_upstreams(struct transport *transport, struct ref *refs,
 	int pretend)
 {
@@ -189,6 +192,8 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
 				transport->remote->name);
 	}
 }
+
+#ifndef NO_RSYNC
 
 static const char *rsync_url(const char *url)
 {
@@ -403,6 +408,8 @@ static int rsync_transport_push(struct transport *transport,
 
 	return result;
 }
+
+#endif /* NO_RSYNC */
 
 struct bundle_transport_data {
 	int fd;
@@ -943,11 +950,13 @@ struct transport *transport_get(struct remote *remote, const char *url)
 
 	if (helper) {
 		transport_helper_init(ret, helper);
+#ifndef NO_RSYNC
 	} else if (starts_with(url, "rsync:")) {
 		ret->get_refs_list = get_refs_via_rsync;
 		ret->fetch = fetch_objs_via_rsync;
 		ret->push = rsync_transport_push;
 		ret->smart_options = NULL;
+#endif /* NO_RSYNC */
 	} else if (url_is_local_not_ssh(url) && is_file(url) && is_bundle(url, 1)) {
 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
 		ret->data = data;

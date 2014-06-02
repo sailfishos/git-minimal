@@ -1058,6 +1058,10 @@ else
 BROKEN_PATH_FIX = '/^\# @@BROKEN_PATH_FIX@@$$/d'
 endif
 
+ifdef NO_RSYNC
+	BASIC_CFLAGS += -DNO_RSYNC
+endif
+
 ifneq (,$(INLINE))
 	BASIC_CFLAGS += -Dinline=$(INLINE)
 endif
