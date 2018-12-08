@@ -1,21 +1,22 @@
 Name: 		git-minimal
-Version: 	1.8.2
+Version: 	2.20.1
 Release: 	1
 Summary:  	Core git tools, cut-down version
 License: 	GPL
 Group: 		Development/Tools
-URL: 		https://github.com/nemomobile/git
+URL: 		https://git.merproject.org/mer-core/git
 Source: 	%{name}-%{version}.tar.bz2
 
+Patch1:		0001-lang-do-not-build-install-unused-stuff.patch
 BuildRequires:	zlib-devel >= 1.2, openssl-devel, curl-devel, expat-devel, gettext
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Requires:	zlib >= 1.2, openssh-clients, expat
 Provides:	git-core = %{version}-%{release}
 Obsoletes:	git-core <= 1.5.4.2
-Provides:  git = %{version}-%{release}
-Conflicts: git-all
-Provides:  git-p4 = %{version}-%{release}
+Provides:	git = %{version}-%{release}
+Conflicts:	git-all
+Provides:	git-p4 = %{version}-%{release}
 Obsoletes:	git-p4
 
 %description
@@ -35,6 +36,8 @@ Mer. It does not depend on tools and libraries not included in Mer
 %prep
 %setup -q -n %{name}-%{version}/git
 
+%patch1 -p1
+
 %build
 make %{extra_make_flags} %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" \
      %{path_settings} \
@@ -50,7 +53,7 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 find %{buildroot} -type f -name perllocal.pod -exec rm -f {} ';'
 
-(find %{buildroot}%{_bindir} -type f | grep -vE "archimport|svn|cvs|email|gitk|git-gui|git-citool" | sed -e s@^%{buildroot}@@)               > bin-files
+(find %{buildroot}%{_bindir} -type f | grep -vE "archimport|svn|cvs|email|gitk|git-gui|git-citool" | sed -e s@^%{buildroot}@@) > bin-files
 rm -rf %{buildroot}%{_mandir}
 rm -rf %{buildroot}%{_datadir}/locale
 
@@ -63,5 +66,5 @@ rm -rf %{buildroot}
 %files -f bin-files
 %defattr(-,root,root)
 %{_datadir}/git-core/
-%doc README COPYING
+%doc README.md COPYING
 %{_sysconfdir}/bash_completion.d
