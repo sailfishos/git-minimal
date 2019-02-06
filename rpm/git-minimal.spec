@@ -56,6 +56,8 @@ find %{buildroot} -type f -name perllocal.pod -exec rm -f {} ';'
 (find %{buildroot}%{_bindir} -type f | grep -vE "archimport|svn|cvs|email|gitk|git-gui|git-citool" | sed -e s@^%{buildroot}@@) > bin-files
 rm -rf %{buildroot}%{_mandir}
 rm -rf %{buildroot}%{_datadir}/locale
+# don't need on minimal installation and at the moment fsmonitor-watchman.sample would pull in perl
+rm %{buildroot}%{_datadir}/git-core/templates/hooks/*.sample
 
 mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d
 install -m 644 -T contrib/completion/git-completion.bash %{buildroot}%{_sysconfdir}/bash_completion.d/git
