@@ -2,9 +2,9 @@ Name: 		git-minimal
 Version: 	2.20.1
 Release: 	1
 Summary:  	Core git tools, cut-down version
-License: 	GPL
+License: 	GPLv2
 Group: 		Development/Tools
-URL: 		https://git.merproject.org/mer-core/git
+URL: 		https://git.sailfishos.org/mer-core/git
 Source: 	%{name}-%{version}.tar.bz2
 
 Patch1:		0001-lang-do-not-build-install-unused-stuff.patch
@@ -62,11 +62,9 @@ rm %{buildroot}%{_datadir}/git-core/templates/hooks/*.sample
 mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d
 install -m 644 -T contrib/completion/git-completion.bash %{buildroot}%{_sysconfdir}/bash_completion.d/git
 
-%clean
-rm -rf %{buildroot}
-
 %files -f bin-files
 %defattr(-,root,root)
 %{_datadir}/git-core/
-%doc README.md COPYING
+%doc README.md 
+%license COPYING
 %{_sysconfdir}/bash_completion.d
