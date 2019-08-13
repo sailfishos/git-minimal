@@ -65,6 +65,7 @@ install -m 644 -T contrib/completion/git-completion.bash %{buildroot}%{_sysconfd
 %files -f bin-files
 %defattr(-,root,root)
 %{_datadir}/git-core/
+%dir %{_bindir}/mergetools
 %doc README.md 
 %license COPYING
 %{_sysconfdir}/bash_completion.d
