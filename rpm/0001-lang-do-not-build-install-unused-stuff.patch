@@ -14,9 +14,9 @@ index 5a969f583..f2ed7ad4f 100644
 @@ -676,8 +676,6 @@ clean-python-script:
  	$(RM) $(SCRIPT_PYTHON_GEN)
  
- SCRIPTS = $(SCRIPT_SH_INS) \
--	  $(SCRIPT_PERL_INS) \
--	  $(SCRIPT_PYTHON_INS) \
+ SCRIPTS = $(SCRIPT_SH_GEN) \
+-	  $(SCRIPT_PERL_GEN) \
+-	  $(SCRIPT_PYTHON_GEN) \
  	  git-instaweb
  
  ETAGS_TARGET = TAGS

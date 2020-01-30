@@ -1,15 +1,13 @@
 Name: 		git-minimal
-Version: 	2.20.1
+Version: 	2.25.0
 Release: 	1
 Summary:  	Core git tools, cut-down version
 License: 	GPLv2
-Group: 		Development/Tools
 URL: 		https://git.sailfishos.org/mer-core/git
 Source: 	%{name}-%{version}.tar.bz2
 
 Patch1:		0001-lang-do-not-build-install-unused-stuff.patch
 BuildRequires:	zlib-devel >= 1.2, openssl-devel, curl-devel, expat-devel, gettext
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Requires:	zlib >= 1.2, openssh-clients, expat
 Provides:	git-core = %{version}-%{release}
@@ -34,9 +32,7 @@ Mer. It does not depend on tools and libraries not included in Mer
 %define extra_make_flags NO_RSYNC=1 NO_PERL=1 NO_TCLTK=1 NO_PYTHON=1 DEFAULT_PAGER=more
 
 %prep
-%setup -q -n %{name}-%{version}/git
-
-%patch1 -p1
+%autosetup -p1 -n %%{name}-%%{version}/git
 
 %build
 make %{extra_make_flags} %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" \
